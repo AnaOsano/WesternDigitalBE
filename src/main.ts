@@ -6,6 +6,7 @@ import * as session from 'express-session'
 import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 import { playgroundMiddleware } from './middlewares/playground-middleware';
 import { ApiPath } from './helpers/api-version.helper';
+import { HttpExceptionFilter } from './filters/http-exception.filter';
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -100,6 +101,11 @@ async function bootstrap() {
       ApiPath('western-digitals/graphql'),
     ]),
   );
+
+  /**
+   * @description Registers a global filter named HttpExceptionFilter that handles exceptions thrown within in the app.
+   */
+    global.app.useGlobalFilters(new HttpExceptionFilter());
   
   await app.listen(port, () => {
     console.log(`Server is running in http://localhost:${port}`);
