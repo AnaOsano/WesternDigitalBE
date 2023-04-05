@@ -7,6 +7,7 @@ import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 import { playgroundMiddleware } from './middlewares/playground-middleware';
 import { ApiPath } from './helpers/api-version.helper';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
+import helmet from 'helmet';
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -124,6 +125,16 @@ async function bootstrap() {
       origin: true,
       preflightContinue: false,
     });
+
+    /**
+     * @description Registers the helmet middleware, which helps secure the app by setting various HTTP headers.
+     */
+    global.app.use(
+      helmet({
+        contentSecurityPolicy: false,
+        frameguard: false,
+      }),
+    );
   
   await app.listen(port, () => {
     console.log(`Server is running in http://localhost:${port}`);
