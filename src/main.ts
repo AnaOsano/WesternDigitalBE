@@ -54,7 +54,7 @@ async function bootstrap() {
      * Swagger (now known as OpenAPI) is a widely used API documentation and testing framework that helps developers and consumers understand and interact with APIs.
      */
   if (
-    ['development', 'local', 'uat'].some(
+    ['development', 'local', 'uat', 'test'].some(
       (env) =>
         process.env.APP_ENV &&
         env.toUpperCase() === process.env.APP_ENV.toUpperCase(),
