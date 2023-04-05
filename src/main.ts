@@ -8,6 +8,7 @@ import { playgroundMiddleware } from './middlewares/playground-middleware';
 import { ApiPath } from './helpers/api-version.helper';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
 import helmet from 'helmet';
+import * as requestIp from 'request-ip';
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -135,6 +136,11 @@ async function bootstrap() {
         frameguard: false,
       }),
     );
+
+    /**
+     * @description Registers requestIp middleware to extract the client IP address from the incoming HTTP request and attach it to the request object as a new property called clientIp.
+     */
+    global.app.use(requestIp.mw());
   
   await app.listen(port, () => {
     console.log(`Server is running in http://localhost:${port}`);

@@ -34,6 +34,7 @@
     "graphql-playground-middleware-express": "^1.7.23",
     "helmet": "^6.0.1",
     "reflect-metadata": "^0.1.13",
+    "request-ip": "^3.3.0",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
     "swagger-ui-express": "^4.6.2"
