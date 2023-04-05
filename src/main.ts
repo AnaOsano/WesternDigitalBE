@@ -4,6 +4,8 @@ import 'dotenv/config';
 import { Logger } from '@nestjs/common';
 import * as session from 'express-session'
 import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
+import { playgroundMiddleware } from './middlewares/playground-middleware';
+import { ApiPath } from './helpers/api-version.helper';
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -87,6 +89,18 @@ async function bootstrap() {
     SwaggerModule.setup('api-doc', global.app, document);
   }
 
+  /**
+   * @description Serves the GraphQL Playground at the specified routes.
+   */
+  global.app.use(
+  /**
+   * @description It should be able to access the GraphQL Playground at the specified routes (e.g., http://localhost:{PORT}/v1/western-digitals/graphql 
+   */
+    playgroundMiddleware({ gigzter: process.env.GRAPHQL_PLAYGROUND_PASS }, [
+      ApiPath('western-digitals/graphql'),
+    ]),
+  );
+  
   await app.listen(port, () => {
     console.log(`Server is running in http://localhost:${port}`);
   });
