@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import 'dotenv/config';
 import { Logger } from '@nestjs/common';
 import * as session from 'express-session'
+import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -47,6 +48,44 @@ async function bootstrap() {
       saveUninitialized: false,
     }),
   );
+
+  /**
+     * Conditionally configuring and setting up the Swagger documentation based on the current environment. 
+     * Swagger (now known as OpenAPI) is a widely used API documentation and testing framework that helps developers and consumers understand and interact with APIs.
+     */
+  if (
+    ['development', 'local', 'uat'].some(
+      (env) =>
+        process.env.APP_ENV &&
+        env.toUpperCase() === process.env.APP_ENV.toUpperCase(),
+    )
+  ) {
+    /**
+     * Initializes a new DocumentBuilder instance, which is used to configure the Swagger documentation's properties, such as title, description, version, and tags. 
+     * It also adds Bearer authentication support.
+     */
+    const documentBuilder: DocumentBuilder = new DocumentBuilder()
+      .setTitle('Altimetrik NodeJS Base')
+      .setDescription('')
+      .setVersion('1.0')
+      .addTag('altimetrik')
+      .addBearerAuth();
+    
+    /**
+     * Creates a Swagger document using the documentBuilder configuration and the application instance (global.app).
+     * The document is an OpenAPIObject, which represents the structure of your API documentation.
+     */
+    const document: OpenAPIObject = SwaggerModule.createDocument(
+      global.app,
+      documentBuilder.build(),
+    );
+
+    /**
+     * Sets up the Swagger documentation in the app by configuring the path where the documentation will be accessible (in this case, /api-doc).
+     * Associates the docs with the app instance (global.app) and the Swagger document (document) created earlier.
+     */
+    SwaggerModule.setup('api-doc', global.app, document);
+  }
 
   await app.listen(port, () => {
     console.log(`Server is running in http://localhost:${port}`);
