@@ -115,6 +115,15 @@ async function bootstrap() {
         transform: true,
       }),
     );
+
+    /**
+     * @description Enables CORS (Cross-Origin Resource Sharing) allowing browsers to make cross-origin requests. 
+     */
+    global.app.enableCors({
+      maxAge: 86400,
+      origin: true,
+      preflightContinue: false,
+    });
   
   await app.listen(port, () => {
     console.log(`Server is running in http://localhost:${port}`);
