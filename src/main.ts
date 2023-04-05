@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import 'dotenv/config';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import * as session from 'express-session'
 import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 import { playgroundMiddleware } from './middlewares/playground-middleware';
@@ -106,6 +106,15 @@ async function bootstrap() {
    * @description Registers a global filter named HttpExceptionFilter that handles exceptions thrown within in the app.
    */
     global.app.useGlobalFilters(new HttpExceptionFilter());
+
+    /**
+     * @description registers a global validation pipe that validates and transforms incoming request data based on DTO classes.
+     */
+    global.app.useGlobalPipes(
+      new ValidationPipe({
+        transform: true,
+      }),
+    );
   
   await app.listen(port, () => {
     console.log(`Server is running in http://localhost:${port}`);
