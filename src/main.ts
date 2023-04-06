@@ -9,6 +9,12 @@ import { ApiPath } from './helpers/api-version.helper';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
 import helmet from 'helmet';
 import * as requestIp from 'request-ip';
+import { configLoader } from './helpers/config.helper';
+
+/**
+ * @description Custom configuration loader that helps to load environment variables from multiple .env files based on the APP_ENV variable
+ */
+configLoader();
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -19,11 +25,9 @@ declare global {
       _logger: Logger;
       logger: (name?: string) => Logger;
     }
-  }
+  } 
+}
 
-
-const port = process.env.PORT || 3000;
-console.log('port', process.env.PORT);
 async function bootstrap() {
   
   /**
@@ -39,7 +43,7 @@ async function bootstrap() {
     return new Logger(name);
   };
 
-  const app = await NestFactory.create(AppModule);
+  global.app = await NestFactory.create(AppModule);
 
   /**
    * Middleware for Express that provides session management
@@ -142,8 +146,7 @@ async function bootstrap() {
      */
     global.app.use(requestIp.mw());
   
-  await app.listen(port, () => {
-    console.log(`Server is running in http://localhost:${port}`);
-  });
+    await global.app.listen(process.env.PORT || 80);
 }
+
 bootstrap();
