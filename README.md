@@ -1,73 +1,74 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# Western Digital Searches
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This project is a search engine for human resources that gathers information from different sources. It provides autocomplete functions and displays search results in a client-side search bar, offering a seamless experience for users seeking human resource information.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Table of Contents
 
-## Description
+## Table of Contents
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+- [Development](#development)
+  - [Running the App](#running-the-app)
+  - [Running Tests](#running-tests)
+- [Contributing](#contributing)
+- [License](#license)
 
-## Installation
+## Getting Started
 
-```bash
-$ npm install
-```
+These instructions will help you set up the project on your local machine for development and testing purposes.
 
-## Running the app
+### Prerequisites
 
-```bash
-# development
-$ npm run start
+Before you begin, ensure you have the following installed on your system:
 
-# watch mode
-$ npm run start:dev
+- [Node.js](https://nodejs.org/) (version 14.x or higher)
+- [npm](https://www.npmjs.com/) (usually comes with Node.js)
 
-# production mode
-$ npm run start:prod
-```
+### Installation
 
-## Test
+1. Clone the repository:
 
-```bash
-# unit tests
-$ npm run test
+git clone https://github.com/AnaOsano/WesternDigitalBE.git
 
-# e2e tests
-$ npm run test:e2e
 
-# test coverage
-$ npm run test:cov
-```
+2. Navigate to the project folder:
 
-## Support
+cd WesternDigitalBE
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
+3. Install the dependencies:
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+npm install
 
-## License
 
-Nest is [MIT licensed](LICENSE).
+Now, you're ready to start working on the project!
+
+### Mocked API
+
+We have implemented a mocked API to simulate the search functionality for development and testing purposes. You can use this API to interact with the search engine and test the autocomplete functions, as well as the search results displayed on the client-side search bar.
+
+The mocked API is available at `http://localhost:3000/v1/search` and accepts a GET request with any query string. For example, to search for a term, you can use the following request format:
+
+GET http://localhost:3000/v1/search?query=your_search_term
+
+Replace `your_search_term` with the term you want to search for, and the API will return a mocked response containing search results.
+
+## Development
+
+### Running the App
+
+To run the app in development mode, use the following command:
+
+npm run start:dev
+
+
+The app will be available at `http://localhost:80`.
+
+### Running Tests
+
+To run tests, use the following command:
+
+npm test
