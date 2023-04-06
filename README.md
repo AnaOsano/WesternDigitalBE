@@ -50,7 +50,7 @@ Now, you're ready to start working on the project!
 
 We have implemented a mocked API to simulate the search functionality for development and testing purposes. You can use this API to interact with the search engine and test the autocomplete functions, as well as the search results displayed on the client-side search bar.
 
-The mocked API is available at `http://localhost:3000/v1/search` and accepts a GET request with any query string. For example, to search for a term, you can use the following request format:
+The mocked API is available at `http://localhost:80/v1/search` and accepts a GET request with any query string. For example, to search for a term, you can use the following request format:
 
 GET http://localhost/v1/search?query=your_search_term
 
