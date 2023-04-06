@@ -52,7 +52,7 @@ We have implemented a mocked API to simulate the search functionality for develo
 
 The mocked API is available at `http://localhost:3000/v1/search` and accepts a GET request with any query string. For example, to search for a term, you can use the following request format:
 
-GET http://localhost:3000/v1/search?query=your_search_term
+GET http://localhost/v1/search?query=your_search_term
 
 Replace `your_search_term` with the term you want to search for, and the API will return a mocked response containing search results.
 
