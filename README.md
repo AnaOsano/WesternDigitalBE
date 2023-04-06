@@ -6,10 +6,14 @@ This project is a search engine for human resources that gathers information fro
 
 ## Table of Contents
 
+## Table of Contents
+
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 - [Usage](#usage)
+  - [Mocked API](#mocked-api)
+- [Project Structure and Patterns](#project-structure-and-patterns)
 - [Development](#development)
   - [Running the App](#running-the-app)
   - [Running Tests](#running-tests)
@@ -55,6 +59,23 @@ The mocked API is available at `http://localhost:80/v1/search` and accepts a GET
 GET http://localhost/v1/search?query=your_search_term
 
 Replace `your_search_term` with the term you want to search for, and the API will return a mocked response containing search results.
+
+## Project Structure and Patterns
+
+Our project follows the controller-service-repository pattern, which enables a clean and maintainable architecture. The main components of this pattern are:
+
+- **Controllers**: Handle HTTP requests and delegate business logic to services.
+- **Services**: Contain the core business logic, responsible for interacting with repositories and returning data to controllers.
+- **Repositories**: Provide an abstraction layer over data access and storage, decoupling the application from the underlying data source.
+
+We have organized our codebase into the following directories:
+
+- **modules**: Contains the main application modules, each with its controllers, services, and repositories.
+- **helpers**: Houses utility functions and classes that can be used throughout the application to perform common tasks.
+- **middlewares**: Stores Express middleware functions that are used to process incoming requests before they reach the controllers.
+- **filters**: Contains custom exception filters that can be used to catch and handle specific exceptions in a centralized manner.
+
+Our tests are organized in a separate directory structure that mirrors the main project structure, making it easy to locate and manage tests for each module and component.
 
 ## Development
 
