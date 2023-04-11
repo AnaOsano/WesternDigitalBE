@@ -1,0 +1,12 @@
+{
+    "conventionalCommits.scopes": [
+        "config",
+        "config",
+        "main",
+        "helpers",
+        "middlewares",
+        "filters",
+        "modules/search",
+        "docs"
+    ]
+}
