@@ -4,10 +4,6 @@ This project is a search engine for human resources that gathers information fro
 
 ## Table of Contents
 
-## Table of Contents
-
-## Table of Contents
-
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
