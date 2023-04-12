@@ -13,6 +13,11 @@ This project is a search engine for human resources that gathers information fro
 - [Development](#development)
   - [Running the App](#running-the-app)
   - [Running Tests](#running-tests)
+- [NodeJS Upgrade and Dependencies Installation](#nodejs-upgrade-and-dependencies-installation)
+- [Dockerization](#dockerization)
+  - [Building the Docker Image](#building-the-docker-image)
+  - [Running the Docker Container](#running-the-docker-container)
+- [Debugging](#debugging)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -89,3 +94,54 @@ The app will be available at `http://localhost:80`.
 To run tests, use the following command:
 
 npm test
+
+## NodeJS Upgrade and Dependencies Installation
+
+To upgrade or install dependencies, follow these steps:
+
+1. Ensure you have the latest version of Node.js installed on your system. You can download it from the [official Node.js website](https://nodejs.org/).
+
+2. Navigate to your project directory and run the following command to install or upgrade the project dependencies:
+
+```console 
+npm install
+```
+
+This command will install or update the dependencies listed in your package.json file. If you need to add a new dependency or upgrade an existing one to a specific version, you can use the following command:
+
+```console
+npm install package-name@version
+```
+
+Replace the `package-name` with the name of the package you want to install or upgrade and the `version` with the desired version number.
+
+## Dockerization
+
+To build and run the application using Docker, follow these steps:
+
+### Building the Docker Image
+
+```bash
+docker build -t westerndigital-be-search .
+```
+
+This command will build a Docker image named `westerndigital-be-search` using the Dockerfile in your project directory.
+
+### Running the Docker Container
+
+```bash
+docker run -d -p 80:80 --name wdbes westerndigital-be-search
+```
+
+
+This command runs the Docker container in the background (`-d`), maps the host port 80 to the container port 80 (`-p 80:80`), and assigns the container a name (`--name wdbes`). The application will be accessible at `http://localhost` in your browser.
+
+## Debugging
+
+The project includes a `.vscode/launch.json` configuration file, which allows you to debug the application using Visual Studio Code. To start debugging, follow these steps:
+
+1. Open the project in Visual Studio Code.
+2. Make sure you have the necessary dependencies installed by running `npm install`.
+3. Press `F5` or go to the "Run" tab in the sidebar and click the "Start Debugging" button with the `Debug app(Local)` option in the dropdown menu.
+
+The application will start in debug mode, and you can set breakpoints, inspect variables, and use other debugging features provided by Visual Studio Code. For more information on debugging in Visual Studio Code, refer to the [official documentation](https://code.visualstudio.com/docs/editor/debugging).
