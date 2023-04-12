@@ -164,8 +164,6 @@ This command will start all the services in the background. To stop the services
 docker-compose down
 ```
 
-This command runs the Docker container in the background (`-d`), maps the host port 80 to the container port 80 (`-p 80:80`), and assigns the container a name (`--name wdbes`). The application will be accessible at `http://localhost` in your browser.
-
 ## Debugging
 
 The project includes a `.vscode/launch.json` configuration file, which allows you to debug the application using Visual Studio Code. To start debugging, follow these steps:
