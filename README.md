@@ -117,22 +117,52 @@ Replace the `package-name` with the name of the package you want to install or u
 
 ## Dockerization
 
-To build and run the application using Docker, follow these steps:
+This project uses Docker to simplify the setup and deployment process. The Docker configuration includes the following services:
 
-### Building the Docker Image
+1. Elasticsearch
+2. Kibana
+3. Our NestJS backend application (WDBES)
+
+### Prerequisites
+
+To run the project using Docker, you'll need to have the following installed on your system:
+
+- Docker Engine
+- Docker Compose
+
+### Elasticsearch
+
+Elasticsearch is a powerful open-source search and analytics engine. In this project, it is configured as a single-node cluster, and the security features are disabled.
+
+To access Elasticsearch, use the following address:
+
+- http://localhost:9200
+
+### Kibana
+
+Kibana is an open-source data visualization and exploration tool for Elasticsearch. It provides a web-based interface to interact with the data stored in Elasticsearch.
+
+To access Kibana, use the following address:
+
+- http://localhost:5601
+
+### WDBES
+
+WDBES is the custom service developed for this project. It depends on the Elasticsearch service.
+
+### Running the Services
+
+To run the services, navigate to the project directory and use the following command:
 
 ```bash
-docker build -t westerndigital-be-search .
+docker-compose up -d
 ```
 
-This command will build a Docker image named `westerndigital-be-search` using the Dockerfile in your project directory.
-
-### Running the Docker Container
+This command will start all the services in the background. To stop the services, use the following command:
 
 ```bash
-docker run -d -p 80:80 --name wdbes westerndigital-be-search
+docker-compose down
 ```
-
 
 This command runs the Docker container in the background (`-d`), maps the host port 80 to the container port 80 (`-p 80:80`), and assigns the container a name (`--name wdbes`). The application will be accessible at `http://localhost` in your browser.
 
