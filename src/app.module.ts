@@ -3,6 +3,7 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { SearchModule } from "./modules/search/search.module";
 import { SearchEngineModule } from "../libs/search-engine/src";
+import { HealthCheckModule } from './modules/health-check/health-check.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { SearchEngineModule } from "../libs/search-engine/src";
       },
     }),
     SearchModule,
+    HealthCheckModule,
   ],
   controllers: [AppController],
   providers: [AppService],
