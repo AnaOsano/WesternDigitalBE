@@ -17,6 +17,14 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@app/search-engine": [
+        "libs/search-engine/src"
+      ],
+      "@app/search-engine/*": [
+        "libs/search-engine/src/*"
+      ]
+    }
   }
 }

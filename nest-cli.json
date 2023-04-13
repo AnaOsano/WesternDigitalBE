@@ -1,4 +1,18 @@
 {
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src"
+  "sourceRoot": "src",
+  "projects": {
+    "search-engine": {
+      "type": "library",
+      "root": "libs/search-engine",
+      "entryFile": "index",
+      "sourceRoot": "libs/search-engine/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/search-engine/tsconfig.lib.json"
+      }
+    }
+  },
+  "compilerOptions": {
+    "webpack": true
+  }
 }
