@@ -123,6 +123,8 @@ This project uses Docker to simplify the setup and deployment process. The Docke
 2. Kibana
 3. Our NestJS backend application (WDBES)
 
+The project also includes a script, `scripts/docker/elastic_init.sh`, and a sample data file, `src/data/hr_data.elasticsearch.json`, for preloading data into Elasticsearch. To import the sample data, set the environment variable `ELASTICSEARCH_IMPORT_HR_SAMPLE_DATA` to `true` in the `.env` file.
+
 ### Prerequisites
 
 To run the project using Docker, you'll need to have the following installed on your system:
@@ -155,7 +157,7 @@ WDBES is the custom service developed for this project. It depends on the Elasti
 To run the services, navigate to the project directory and use the following command:
 
 ```bash
-docker-compose up -d
+docker-compose up --build -d
 ```
 
 This command will start all the services in the background. To stop the services, use the following command:
@@ -163,6 +165,8 @@ This command will start all the services in the background. To stop the services
 ```bash
 docker-compose down
 ```
+
+By running the `docker-compose up --build -d` command, the containers will be initialized, and if the `ELASTICSEARCH_IMPORT_HR_SAMPLE_DATA` flag is set to `true`, the sample data from `src/data/hr_data.elasticsearch.json` will be imported into Elasticsearch.
 
 ## Debugging
 
