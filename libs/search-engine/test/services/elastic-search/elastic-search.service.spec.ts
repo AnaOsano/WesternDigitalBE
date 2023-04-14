@@ -1,5 +1,5 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { ElasticSearchService } from "../../../../src/services/elastic-search/elastic-search.service";
+import { ElasticSearchService } from "../../../src/services/elastic-search/elastic-search.service";
 import { Client } from "@elastic/elasticsearch";
 import {
   expectedSearchParameters,
