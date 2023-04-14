@@ -1,24 +1,27 @@
-import { Injectable } from '@nestjs/common';
-
+import { Injectable } from "@nestjs/common";
+import { SearchEngineService } from "../../../../../libs/search-engine/src/search-engine.service";
+import { PaginationArgs } from "../../../../models/dtos/pagination.in.dto";
+import { IPaginatedType } from "../../../../models/dtos/pagination.out.dto";
+import { SearchResultDto } from "../../models/dtos/search-result.out.dto";
+import { PaginatedSearchResultsMapper } from "../../models/mappers/search-result.mapper";
 
 @Injectable()
 export class SearchService {
-  async search(query: string) {
-    // This is a mocked response, replace with the actual implementation
-    return {
-      success: true,
-      data: [
-        {
-          title: 'Mocked Result 1',
-          description: 'Description for mocked result 1',
-          link: 'https://example.com/result-1',
-        },
-        {
-          title: 'Mocked Result 2',
-          description: 'Description for mocked result 2',
-          link: 'https://example.com/result-2',
-        },
-      ],
-    };
+  constructor(private readonly searchEngineService: SearchEngineService) {}
+  async search(
+    query: string,
+    pagination: PaginationArgs
+  ): Promise<IPaginatedType<SearchResultDto>> {
+    try {
+      const result = await this.searchEngineService.search(query, pagination);
+      
+      return PaginatedSearchResultsMapper(
+        result,
+        pagination,
+        this.searchEngineService.provider
+      );
+    } catch (err) {
+      throw err;
+    }
   }
 }
