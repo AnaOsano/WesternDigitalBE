@@ -1,6 +1,6 @@
-import { Test, TestingModule } from "@nestjs/testing";
-import { ElasticSearchService } from "../../../src/services/elastic-search/elastic-search.service";
-import { Client } from "@elastic/elasticsearch";
+import { Test, TestingModule } from '@nestjs/testing';
+import { ElasticSearchService } from '../../../src/services/elastic-search/elastic-search.service';
+import { Client } from '@elastic/elasticsearch';
 import {
   expectedSearchParameters,
   limit,
@@ -8,11 +8,11 @@ import {
   searchErrorMock,
   searchResponse,
   skip,
-} from "../../mocks/search-engine.mocks";
+} from '../../mocks/search-engine.mocks';
 
-jest.mock("@elastic/elasticsearch");
+jest.mock('@elastic/elasticsearch');
 
-describe("ElasticSearchService", () => {
+describe('ElasticSearchService', () => {
   let service: ElasticSearchService;
 
   beforeEach(async () => {
@@ -21,9 +21,9 @@ describe("ElasticSearchService", () => {
         {
           provide: ElasticSearchService,
           useFactory: () => {
-            const mockedClient = new Client({ node: "http://localhost:9200" });
+            const mockedClient = new Client({ node: 'http://localhost:9200' });
             return new ElasticSearchService({
-              node: "http://localhost:9200",
+              node: 'http://localhost:9200',
               client: mockedClient,
             });
           },
@@ -35,7 +35,7 @@ describe("ElasticSearchService", () => {
     service = module.get<ElasticSearchService>(ElasticSearchService);
   });
 
-  it("should search using the Elasticsearch client", async () => {
+  it('should search using the Elasticsearch client', async () => {
     const searchMock = jest.fn().mockResolvedValue(searchResponse);
 
     (service as any).client.search = searchMock;
@@ -46,12 +46,12 @@ describe("ElasticSearchService", () => {
     expect(result).toEqual(searchResponse);
   });
 
-  it("should throw an error when searching in Elasticsearch fails", async () => {
+  it('should throw an error when searching in Elasticsearch fails', async () => {
     const searchMock = searchErrorMock;
     (service as any).client.search = searchMock;
 
     await expect(service.search(query, { skip, limit })).rejects.toThrow(
-      "Search error"
+      'Search error',
     );
   });
 });
