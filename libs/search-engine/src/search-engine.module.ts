@@ -12,6 +12,7 @@ export class SearchEngineModule {
     };
 
     return {
+      global: true,
       module: SearchEngineModule,
       providers: [searchEngineConfigProvider, SearchEngineService],
       exports: [SearchEngineService],

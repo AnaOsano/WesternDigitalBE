@@ -1,35 +1,43 @@
 import { Client } from "@elastic/elasticsearch";
 import { SearchEngineClient } from "../../models/interfaces/search-engine-client.interface";
+import {
+  AggregationsAggregate,
+  SearchResponse,
+} from "@elastic/elasticsearch/lib/api/types";
 
 export class ElasticSearchService implements SearchEngineClient {
   private readonly client: Client;
 
   constructor(private readonly config: any) {
-    this.client = new Client({
-      node: "http://es-container:9200", // Using the Elasticsearch URL from the docker-compose
-      ...config, // Any additional configuration options provided
-    });
+    this.client = new Client(config);
   }
 
-  async search(query: string): Promise<any> {
+  async search(
+    query: string,
+    { skip, limit }
+  ): Promise<SearchResponse<unknown, Record<string, AggregationsAggregate>>> {
     try {
-      const response = await this.client.search({
-        index: "your-index-name", // Replace with your desired index name
+      const results = await this.client.search({
+        index: "search",
+        from: skip,
+        size: limit,
         body: {
           query: {
-            match: {
-              // Replace 'field' with the field you want to search in
-              field: query,
+            multi_match: {
+              query: query,
+              fields: ["title", "content"],
             },
           },
         },
       });
+
+      return results;
     } catch (error) {
       console.error("Error searching in Elasticsearch:", error);
       throw error;
     }
   }
-  
+
   index(document: any, options?: any): Promise<any> {
     throw new Error("Method not implemented.");
   }
