@@ -5,6 +5,8 @@ services:
     container_name: elasticsearch
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
+      - ./scripts/docker:/scripts
+      - ./src/data/hr_data.elasticsearch.json:/usr/share/elasticsearch/hr_data.json
     ports:
       - ${ES_PORT}:9200
     restart: always
@@ -12,11 +14,18 @@ services:
       - xpack.security.enabled=false
       - discovery.type=single-node
       - xpack.license.self_generated.type=${LICENSE}
+      - ELASTICSEARCH_IMPORT_HR_SAMPLE_DATA=${ELASTICSEARCH_IMPORT_HR_SAMPLE_DATA}
     ulimits:
       memlock:
         soft: -1
         hard: -1
     mem_limit: ${MEM_LIMIT}
+    command:
+    - /bin/bash
+    - -c
+    - |
+      chmod +x /scripts/elasticsearch_init.sh
+      /scripts/elasticsearch_init.sh
   
   kibana:
     depends_on:
@@ -47,6 +56,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.wdbes
+    ports:
+    - ${PORT}:80
     depends_on:
       - elasticsearch
     healthcheck:

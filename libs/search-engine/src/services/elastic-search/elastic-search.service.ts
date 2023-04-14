@@ -18,7 +18,7 @@ export class ElasticSearchService implements SearchEngineClient {
   ): Promise<SearchResponse<unknown, Record<string, AggregationsAggregate>>> {
     try {
       const results = await this.client.search({
-        index: "search",
+        index: process.env.ELASTICSEARCH_INDEX,
         from: skip,
         size: limit,
         body: {

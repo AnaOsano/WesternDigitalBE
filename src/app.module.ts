@@ -10,8 +10,8 @@ import { HealthCheckModule } from "./modules/health-check/health-check.module";
     SearchEngineModule.forRoot({
       provider: "elasticsearch",
       options: {
-        node: process.env.ELASTICSEARCH_NODE || "http://127.0.0.1:9200",
-        index: process.env.ELASTICSEARCH_INDEX || 'search',
+        node: process.env.ELASTICSEARCH_NODE || "http://elasticsearch:9200",
+        index: process.env.ELASTICSEARCH_INDEX || 'hr',
         maxRetries: 10,
         requestTimeout: 60000,
       },
