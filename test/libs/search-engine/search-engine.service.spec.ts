@@ -1,12 +1,9 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { PaginationArgs } from "../../../src/models/dtos/pagination.in.dto";
-import {
-  AggregationsAggregate,
-  SearchResponse,
-} from "@elastic/elasticsearch/lib/api/types";
 import { SearchEngineService } from "../../../libs/search-engine/src";
 import { ElasticSearchService } from "../../../libs/search-engine/src/services/elastic-search/elastic-search.service";
 import { SEARCH_ENGINE_CONFIG } from "../../../libs/search-engine/src/models/dtos/search-engine.constants";
+import { expectedResult, limit, query, skip } from "./mocks/search-engine.mocks";
 
 jest.mock("../../../libs/search-engine/src/services/elastic-search/elastic-search.service");
 
@@ -49,31 +46,7 @@ describe("SearchEngineService", () => {
   });
 
   it("should search using the ElasticSearchService", async () => {
-    const query = "test query";
-    const pagination: PaginationArgs = { skip: 0, limit: 10 };
-    const expectedResult:
-      | SearchResponse<unknown, Record<string, AggregationsAggregate>>
-      | any = {
-      body: {
-        hits: {
-          total: {
-            value: 1,
-            relation: "eq",
-          },
-          hits: [{ _source: { title: "Test title", content: "Test content" } }],
-        },
-      },
-      statusCode: 200,
-      headers: {},
-      meta: {
-        context: null,
-        name: "elasticsearch-js",
-        request: { params: {}, options: {}, id: null },
-        connection: { url: "http://localhost:9200", id: "http" },
-        attempts: 0,
-        aborted: false,
-      },
-    };
+    const pagination: PaginationArgs = { skip, limit };
 
     mockElasticSearchService.search.mockResolvedValue(expectedResult);
     service["searchEngineClient"] = mockElasticSearchService;
