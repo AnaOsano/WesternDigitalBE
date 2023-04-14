@@ -8,7 +8,7 @@ This project is a search engine for human resources that gathers information fro
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 - [Usage](#usage)
-  - [Mocked API](#elasticsearch-backend-api)
+  - [Elasticsearch-backend API](#elasticsearch-backend-api)
 - [Project Structure and Patterns](#project-structure-and-patterns)
 - [Development](#development)
   - [Running the App](#running-the-app)
