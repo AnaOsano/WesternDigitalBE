@@ -8,7 +8,7 @@ This project is a search engine for human resources that gathers information fro
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 - [Usage](#usage)
-  - [Mocked API](#mocked-api)
+  - [Mocked API](#elasticsearch-backend-api)
 - [Project Structure and Patterns](#project-structure-and-patterns)
 - [Development](#development)
   - [Running the App](#running-the-app)
@@ -51,15 +51,25 @@ npm install
 
 Now, you're ready to start working on the project!
 
-### Mocked API
+## Elasticsearch-backend API
 
-We have implemented a mocked API to simulate the search functionality for development and testing purposes. You can use this API to interact with the search engine and test the autocomplete functions, as well as the search results displayed on the client-side search bar.
+We have implemented an API that interacts with the Elasticsearch instance to provide search functionality for development and testing purposes. You can use this API to interact with the search engine, test the autocomplete functions, and display the search results on the client-side search bar.
 
-The mocked API is available at `http://localhost:80/v1/search` and accepts a GET request with any query string. For example, to search for a term, you can use the following request format:
+The API is available at `http://localhost/v1/search` and accepts a GET request with any query string. For example, to search for a term, you can use the following request format:
 
-GET http://localhost/v1/search?query=your_search_term
+```curl
+GET http://localhost/v1/search?query=your_search_term&skip=0&limit=10
+```
 
-Replace `your_search_term` with the term you want to search for, and the API will return a mocked response containing search results.
+Replace `your_search_term` with the term you want to search for, and the API will return paginated search results from Elasticsearch. The `skip` and `limit` parameters can be used to control the pagination of the results. By default, `skip` is set to 0 and the `limit` is set to 10.
+
+As a result of the query, you will receive paginated search results. For example, to search for the term "Applying for a position" and retrieve the first five results, you can use the following request:
+
+```curl
+GET http://localhost/v1/search?query=Applying%20for%20a%20position&skip=0&limit=5
+```
+
+The search results are no longer mocked, and they are retrieved directly from the Elasticsearch instance.
 
 ## Project Structure and Patterns
 
