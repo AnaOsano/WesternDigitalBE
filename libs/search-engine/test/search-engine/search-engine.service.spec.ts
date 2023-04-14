@@ -1,11 +1,11 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { PaginationArgs } from "../../../src/models/dtos/pagination.in.dto";
-import { SearchEngineService } from "../../../libs/search-engine/src";
-import { ElasticSearchService } from "../../../libs/search-engine/src/services/elastic-search/elastic-search.service";
-import { SEARCH_ENGINE_CONFIG } from "../../../libs/search-engine/src/models/dtos/search-engine.constants";
+import { PaginationArgs } from "../../../../src/models/dtos/pagination.in.dto";
+import { SearchEngineService } from "../../src";
+import { ElasticSearchService } from "../../src/services/elastic-search/elastic-search.service";
+import { SEARCH_ENGINE_CONFIG } from "../../src/models/dtos/search-engine.constants";
 import { expectedResult, limit, query, skip } from "./mocks/search-engine.mocks";
 
-jest.mock("../../../libs/search-engine/src/services/elastic-search/elastic-search.service");
+jest.mock("../../src/services/elastic-search/elastic-search.service");
 
 describe("SearchEngineService", () => {
   let service: SearchEngineService;

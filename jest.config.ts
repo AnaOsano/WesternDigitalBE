@@ -11,7 +11,7 @@ const config: Config.InitialOptions = {
   collectCoverageFrom: ['**/*.(t|j)s'],
   coverageDirectory: './coverage',
   testEnvironment: 'node',
-  roots: ['<rootDir>/src/', '<rootDir>/test/'],
+  roots: ['<rootDir>/src/', '<rootDir>/test/', '<rootDir>/libs/'],
   setupFiles: ['<rootDir>/jest.setup.ts'],
 };
 

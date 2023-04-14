@@ -33,7 +33,6 @@ export class ElasticSearchService implements SearchEngineClient {
 
       return results;
     } catch (error) {
-      console.error("Error searching in Elasticsearch:", error);
       throw error;
     }
   }
