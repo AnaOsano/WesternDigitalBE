@@ -7,7 +7,7 @@ import {
   query,
   searchErrorMock,
   searchResponse,
-  skip,
+  skip
 } from '../../mocks/search-engine.mocks';
 
 jest.mock('@elastic/elasticsearch');
@@ -24,11 +24,11 @@ describe('ElasticSearchService', () => {
             const mockedClient = new Client({ node: 'http://localhost:9200' });
             return new ElasticSearchService({
               node: 'http://localhost:9200',
-              client: mockedClient,
+              client: mockedClient
             });
-          },
-        },
-      ],
+          }
+        }
+      ]
     }).compile();
 
     (Client as any).mockClear();

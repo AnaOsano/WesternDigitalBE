@@ -1,14 +1,14 @@
 // search-result.dto.ts
-import { ObjectType, Field } from "@nestjs/graphql";
+import { ObjectType, Field } from '@nestjs/graphql';
 
 @ObjectType()
 export class SearchResultDto {
   @Field()
-  id: string;
+    id: string;
 
   @Field()
-  title: string;
+    title: string;
 
   @Field()
-  content: string;
+    content: string;
 }

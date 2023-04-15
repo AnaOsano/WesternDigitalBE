@@ -2,7 +2,7 @@ import {
   ExceptionFilter,
   Catch,
   ArgumentsHost,
-  HttpException,
+  HttpException
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { GqlArgumentsHost, GqlContextType } from '@nestjs/graphql';
@@ -43,8 +43,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
             status: 'error',
             timestamp: new Date().toISOString(),
             path: request.url,
-            message: exception.message,
-          },
+            message: exception.message
+          }
         });
       }
       /**

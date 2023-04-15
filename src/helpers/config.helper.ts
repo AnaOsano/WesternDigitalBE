@@ -1,16 +1,16 @@
-import { config, parse } from "dotenv";
-import { resolve } from "path";
-import { existsSync, readFileSync } from "fs";
+import { config, parse } from 'dotenv';
+import { resolve } from 'path';
+import { existsSync, readFileSync } from 'fs';
 
-const dotenvExpand = require("dotenv-expand");
+const dotenvExpand = require('dotenv-expand');
 
 export const configLoader = () => {
-  const cfg = config({ path: resolve(process.cwd(), `.env`) });
+  const cfg = config({ path: resolve(process.cwd(), '.env') });
 
   if (process.env.APP_ENV) {
     const filePath = resolve(
       process.cwd(),
-      `${process.env.APP_ENV ? `.${process.env.APP_ENV}` : ""}.env`
+      `${process.env.APP_ENV ? `.${process.env.APP_ENV}` : ''}.env`
     );
     if (existsSync(filePath)) {
       const envConfig = parse(readFileSync(filePath));

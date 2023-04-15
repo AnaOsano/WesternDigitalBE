@@ -1,13 +1,13 @@
-import { Inject, Injectable } from "@nestjs/common";
-import { SEARCH_ENGINE_CONFIG } from "./models/dtos/search-engine.constants";
-import { SearchEngineConfig } from "./models/interfaces/search-engine.config";
-import { ElasticSearchService } from "./services/elastic-search/elastic-search.service";
-import { SearchEngineClient } from "./models/interfaces/search-engine-client.interface";
-import { PaginationArgs } from "../../../src/models/dtos/pagination.in.dto";
+import { Inject, Injectable } from '@nestjs/common';
+import { SEARCH_ENGINE_CONFIG } from './models/dtos/search-engine.constants';
+import { SearchEngineConfig } from './models/interfaces/search-engine.config';
+import { ElasticSearchService } from './services/elastic-search/elastic-search.service';
+import { SearchEngineClient } from './models/interfaces/search-engine-client.interface';
+import { PaginationArgs } from '../../../src/models/dtos/pagination.in.dto';
 import {
   AggregationsAggregate,
-  SearchResponse,
-} from "@elastic/elasticsearch/lib/api/types";
+  SearchResponse
+} from '@elastic/elasticsearch/lib/api/types';
 
 @Injectable()
 export class SearchEngineService {
@@ -17,7 +17,7 @@ export class SearchEngineService {
     @Inject(SEARCH_ENGINE_CONFIG) private config: SearchEngineConfig
   ) {
     switch (config.provider) {
-      case "elasticsearch":
+      case 'elasticsearch':
         this.searchEngineClient = new ElasticSearchService(config.options);
         break;
       default:
@@ -34,7 +34,7 @@ export class SearchEngineService {
     return this.searchEngineClient.search(query, pagination);
   }
 
-  get provider(): "elasticsearch" | "alternative" {
-    return this.config.provider || "elasticsearch";
+  get provider(): 'elasticsearch' | 'alternative' {
+    return this.config.provider || 'elasticsearch';
   }
 }

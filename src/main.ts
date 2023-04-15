@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import 'dotenv/config';
 import { Logger, ValidationPipe } from '@nestjs/common';
-import * as session from 'express-session'
+import * as session from 'express-session';
 import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 import { playgroundMiddleware } from './middlewares/playground-middleware';
 import { ApiPath } from './helpers/api-version.helper';
@@ -23,7 +23,7 @@ declare global {
       app: any;
       hbs: any;
       _logger: Logger;
-      logger: (name?: string) => Logger;
+      logger: () => Logger;
     }
   } 
 }
@@ -54,7 +54,7 @@ async function bootstrap() {
     session({
       secret: process.env.SESSION_SECRET || 'my-secret',
       resave: false,
-      saveUninitialized: false,
+      saveUninitialized: false
     }),
   );
 
@@ -104,49 +104,49 @@ async function bootstrap() {
    * @description It should be able to access the GraphQL Playground at the specified routes (e.g., http://localhost:{PORT}/v1/western-digitals/graphql 
    */
     playgroundMiddleware({ gigzter: process.env.GRAPHQL_PLAYGROUND_PASS }, [
-      ApiPath('western-digitals/graphql'),
+      ApiPath('western-digitals/graphql')
     ]),
   );
 
   /**
    * @description Registers a global filter named HttpExceptionFilter that handles exceptions thrown within in the app.
    */
-    global.app.useGlobalFilters(new HttpExceptionFilter());
+  global.app.useGlobalFilters(new HttpExceptionFilter());
 
-    /**
+  /**
      * @description registers a global validation pipe that validates and transforms incoming request data based on DTO classes.
      */
-    global.app.useGlobalPipes(
-      new ValidationPipe({
-        transform: true,
-      }),
-    );
+  global.app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true
+    }),
+  );
 
-    /**
+  /**
      * @description Enables CORS (Cross-Origin Resource Sharing) allowing browsers to make cross-origin requests. 
      */
-    global.app.enableCors({
-      maxAge: 86400,
-      origin: true,
-      preflightContinue: false,
-    });
+  global.app.enableCors({
+    maxAge: 86400,
+    origin: true,
+    preflightContinue: false
+  });
 
-    /**
+  /**
      * @description Registers the helmet middleware, which helps secure the app by setting various HTTP headers.
      */
-    global.app.use(
-      helmet({
-        contentSecurityPolicy: false,
-        frameguard: false,
-      }),
-    );
+  global.app.use(
+    helmet({
+      contentSecurityPolicy: false,
+      frameguard: false
+    }),
+  );
 
-    /**
+  /**
      * @description Registers requestIp middleware to extract the client IP address from the incoming HTTP request and attach it to the request object as a new property called clientIp.
      */
-    global.app.use(requestIp.mw());
+  global.app.use(requestIp.mw());
   
-    await global.app.listen(process.env.PORT || 80);
+  await global.app.listen(process.env.PORT || 80);
 }
 
 bootstrap();

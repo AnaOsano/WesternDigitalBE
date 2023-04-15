@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import * as auth from "basic-auth";
+import { Request, Response } from 'express';
+import * as auth from 'basic-auth';
 
 interface IAuthRequest extends Request {
   auth?: {
@@ -16,7 +16,7 @@ interface IAuthRequest extends Request {
  */
 export const playgroundMiddleware = (
   users: { [username: string]: string },
-  path = ["/graphql"]
+  path = ['/graphql']
 ) => {
   /**
    * @description Checks if the provided username and password match any of the valid users.
@@ -33,7 +33,7 @@ export const playgroundMiddleware = (
   /**
    *
    */
-  return (req: IAuthRequest, resp: Response, next: (...args: any[]) => any) => {
+  return (req: IAuthRequest, resp: Response, next: () => any) => {
     /**
      * The main middleware function checks if the current request's path is included in the path array and if the request method is 'GET'.
      * If not, it proceeds to the next middleware in the pipeline.
@@ -43,7 +43,7 @@ export const playgroundMiddleware = (
     }
     if (
       path.some((p) => p === req.path) &&
-      req.method.toLowerCase() === "get"
+      req.method.toLowerCase() === 'get'
     ) {
       /**
        * Extract Basic Authentication credentials from the request
@@ -54,13 +54,13 @@ export const playgroundMiddleware = (
        * @returns 401 Unauthorized response with the 'WWW-Authenticate' header set to 'Basic'.
        */
       const unauthorized = () => {
-        const challengeString = "Basic";
+        const challengeString = 'Basic';
 
-        resp.set("WWW-Authenticate", challengeString);
+        resp.set('WWW-Authenticate', challengeString);
 
         return resp.status(401).json({
           status: 401,
-          message: "",
+          message: ''
         });
       };
 
@@ -74,7 +74,7 @@ export const playgroundMiddleware = (
        */
       req.auth = {
         user: authentication.name,
-        password: authentication.pass,
+        password: authentication.pass
       };
 
       /**

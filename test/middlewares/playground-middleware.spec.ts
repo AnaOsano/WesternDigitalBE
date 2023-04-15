@@ -1,4 +1,3 @@
-import { Request, Response } from 'express';
 import { playgroundMiddleware } from '../../src/middlewares/playground-middleware';
 
 describe('playgroundMiddleware', () => {

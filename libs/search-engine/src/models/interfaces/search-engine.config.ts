@@ -1,4 +1,4 @@
 export interface SearchEngineConfig {
-  provider: "elasticsearch" | "alternative";
+  provider: 'elasticsearch' | 'alternative';
   options: any;
 }

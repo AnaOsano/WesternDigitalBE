@@ -6,6 +6,6 @@ import { ApiPath } from '../../../helpers/api-version.helper';
 export class HealthCheckController {
   @Get()
   healthCheck(@Res() res: Response) {
-    res.status(HttpStatus.OK).send("OK");
+    res.status(HttpStatus.OK).send('OK');
   }
 }

@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 import {
   AggregationsAggregate,
-  SearchResponse,
-} from "@elastic/elasticsearch/lib/api/types";
+  SearchResponse
+} from '@elastic/elasticsearch/lib/api/types';
 
 // libs/search-adapter/src/search-client.interface.ts
 export interface SearchEngineClient {

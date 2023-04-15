@@ -8,14 +8,14 @@ export class SearchEngineModule {
   static forRoot(config: SearchEngineConfig): DynamicModule {
     const searchEngineConfigProvider: Provider = {
       provide: SEARCH_ENGINE_CONFIG,
-      useValue: config,
+      useValue: config
     };
 
     return {
       global: true,
       module: SearchEngineModule,
       providers: [searchEngineConfigProvider, SearchEngineService],
-      exports: [SearchEngineService],
+      exports: [SearchEngineService]
     };
   }
 }

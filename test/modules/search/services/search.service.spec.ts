@@ -15,7 +15,7 @@ describe('SearchService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [SearchService, SearchEngineService],
+      providers: [SearchService, SearchEngineService]
     }).compile();
 
     service = module.get<SearchService>(SearchService);
@@ -37,11 +37,10 @@ describe('SearchService', () => {
       items: [],
       total: 0,
       skip: pagination.skip,
-      limit: pagination.limit,
+      limit: pagination.limit
     };
   
     jest.spyOn(searchEngineService, 'search').mockResolvedValue(searchEngineResult);
-    const mapperSpy = jest.spyOn(SearchResultMapper, 'PaginatedSearchResultsMapper').mockReturnValue(searchEngineResult);
   
     await service.search(query, pagination);
   
@@ -55,7 +54,7 @@ describe('SearchService', () => {
       items: [],
       total: 0,
       skip: pagination.skip,
-      limit: pagination.limit,
+      limit: pagination.limit
     };
 
     jest.spyOn(searchEngineService, 'search').mockResolvedValue(searchEngineResult);

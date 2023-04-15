@@ -1,15 +1,15 @@
-import { ArgumentsHost, HttpException, HttpStatus } from "@nestjs/common";
-import { HttpExceptionFilter } from "../../src/filters/http-exception.filter";
+import { ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
+import { HttpExceptionFilter } from '../../src/filters/http-exception.filter';
 import { createMock } from '@golevelup/nestjs-testing';
 
-describe("HttpExceptionFilter", () => {
+describe('HttpExceptionFilter', () => {
   let filter: HttpExceptionFilter;
 
   beforeEach(() => {
     filter = new HttpExceptionFilter();
   });
 
-  it("should be defined", () => {
+  it('should be defined', () => {
     expect(filter).toBeDefined();
   });
 
@@ -18,20 +18,20 @@ describe("HttpExceptionFilter", () => {
   
     const request = {
       method: 'GET',
-      url: '/test',
+      url: '/test'
     } as unknown as Request;
   
     const response = {
       status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
+      json: jest.fn()
     } as unknown as Response;
   
     const argsHost = createMock<ArgumentsHost>({
       switchToHttp: () => ({
         getRequest: () => request,
-        getResponse: () => response,
+        getResponse: () => response
       }),
-      getType: () => 'http',
+      getType: () => 'http'
     });
   
     filter.catch(httpException, argsHost);
@@ -40,11 +40,11 @@ describe("HttpExceptionFilter", () => {
     expect(response.json).toHaveBeenCalledWith({
       metadata: {
         statusCode: HttpStatus.BAD_REQUEST,
-        status: "error",
+        status: 'error',
         timestamp: expect.any(String),
-        path: "/test",
-        message: "Test error",
-      },
+        path: '/test',
+        message: 'Test error'
+      }
     });
   });
   

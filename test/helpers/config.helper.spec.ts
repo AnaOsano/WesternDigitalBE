@@ -1,4 +1,4 @@
-import { configLoader } from "../../src/helpers/config.helper";
+import { configLoader } from '../../src/helpers/config.helper';
 
 
 describe('configLoader', () => {
