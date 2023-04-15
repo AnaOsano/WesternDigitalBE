@@ -1,21 +1,21 @@
 import {
   AggregationsAggregate,
   SearchResponse,
-} from "@elastic/elasticsearch/lib/api/types";
-import { SearchResultDto } from "../dtos/search-result.out.dto";
-import { PaginationArgs } from "../../../../models/dtos/pagination.in.dto";
-import { IPaginatedType } from "../../../../models/dtos/pagination.out.dto";
+} from '@elastic/elasticsearch/lib/api/types';
+import { SearchResultDto } from '../dtos/search-result.out.dto';
+import { PaginationArgs } from '../../../../models/dtos/pagination.in.dto';
+import { IPaginatedType } from '../../../../models/dtos/pagination.out.dto';
 
 export const PaginatedSearchResultsMapper = (
   result: SearchResponse<unknown, Record<string, AggregationsAggregate>> | any,
   pagination: PaginationArgs,
-  provider: "elasticsearch" | "alternative"
+  provider: 'elasticsearch' | 'alternative',
 ): IPaginatedType<SearchResultDto> => {
   try {
     switch (provider) {
-      case "elasticsearch":
+      case 'elasticsearch':
         const items: SearchResultDto[] = result?.hits?.hits?.map((hit) =>
-          SearchResultMapper(hit._source)
+          SearchResultMapper(hit._source),
         );
 
         const total = result?.hits?.total.value;
