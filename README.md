@@ -38,20 +38,19 @@ Before you begin, ensure you have the following installed on your system:
 
 git clone https://github.com/AnaOsano/WesternDigitalBE.git
 
-
 2. Navigate to the project folder:
 
 cd WesternDigitalBE
-
 
 3. Install the dependencies:
 
 npm install
 
-
 Now, you're ready to start working on the project!
 
 ## Elasticsearch-backend API
+
+### Search API
 
 We have implemented an API that interacts with the Elasticsearch instance to provide search functionality for development and testing purposes. You can use this API to interact with the search engine, test the autocomplete functions, and display the search results on the client-side search bar.
 
@@ -70,6 +69,49 @@ GET http://localhost/v1/search?query=Applying%20for%20a%20position&skip=0&limit=
 ```
 
 The search results are no longer mocked, and they are retrieved directly from the Elasticsearch instance.
+
+### Index API
+
+The Index API allows you to index data in the Elasticsearch instance. To use the index API, make a POST request to the `/index` endpoint with an array of objects in the request body.
+
+Each object should contain the following properties:
+
+- `id`: Unique identifier for the document
+- `title`: Title of the document
+- `content`: Content of the document
+
+Example:
+
+Request:
+
+```http
+POST /api/v1/search/index
+Content-Type: application/json
+
+[
+  {
+    "id": "1",
+    "title": "Title 1",
+    "content": "Content 1"
+  },
+  {
+    "id": "2",
+    "title": "Title 2",
+    "content": "Content 2"
+  }
+]
+```
+
+Response:
+
+```json
+{
+  "indexedCount": 2,
+  "indexedIds": ["OEbvlYcBEgFxFtc2myL4", "...similar"]
+}
+```
+
+The response will include the number of indexed documents in the indexedCount property and an array of indexed document IDs in the `indexedIds` property. If any document fails to index, it will not be included in the `indexedIds` array.
 
 ## Project Structure and Patterns
 
@@ -96,7 +138,6 @@ To run the app in development mode, use the following command:
 
 npm run start:dev
 
-
 The app will be available at `http://localhost:80`.
 
 ### Running Tests
@@ -113,7 +154,7 @@ To upgrade or install dependencies, follow these steps:
 
 2. Navigate to your project directory and run the following command to install or upgrade the project dependencies:
 
-```console 
+```console
 npm install
 ```
 
