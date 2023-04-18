@@ -23,7 +23,7 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-var-requires': 'off',
     // Best practices
-    'no-unused-vars': 'error',
+    'no-unused-vars': 'warn',
     'indent': ['error', 2, { 'SwitchCase': 1 }],
     'quotes': ['error', 'single'],
     'semi': ['error', 'always'],
@@ -31,7 +31,6 @@ module.exports = {
     'no-multi-spaces': 'error',
     'eqeqeq': 'error',
     'brace-style': ['error', '1tbs'],
-    'comma-dangle': ['error', 'never'],
     'curly': ['error', 'multi-line'],
     'no-console': 'warn',
   },
