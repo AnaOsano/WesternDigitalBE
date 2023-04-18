@@ -3,11 +3,13 @@ import { ElasticSearchService } from '../../../src/services/elastic-search/elast
 import { Client } from '@elastic/elasticsearch';
 import {
   expectedSearchParameters,
+  indexBulkResponse,
+  indexDataDtoArrayMock,
   limit,
   query,
   searchErrorMock,
   searchResponse,
-  skip
+  skip,
 } from '../../mocks/search-engine.mocks';
 
 jest.mock('@elastic/elasticsearch');
@@ -24,11 +26,11 @@ describe('ElasticSearchService', () => {
             const mockedClient = new Client({ node: 'http://localhost:9200' });
             return new ElasticSearchService({
               node: 'http://localhost:9200',
-              client: mockedClient
+              client: mockedClient,
             });
-          }
-        }
-      ]
+          },
+        },
+      ],
     }).compile();
 
     (Client as any).mockClear();
@@ -52,6 +54,30 @@ describe('ElasticSearchService', () => {
 
     await expect(service.search(query, { skip, limit })).rejects.toThrow(
       'Search error',
+    );
+  });
+
+  // Add these test cases in your ElasticSearchService test suite
+  it('should index data using the Elasticsearch client', async () => {
+    const bulkMock = jest.fn().mockResolvedValue(indexBulkResponse);
+
+    (service as any).client.bulk = bulkMock;
+
+    const result = await service.index(indexDataDtoArrayMock);
+
+    expect(bulkMock).toHaveBeenCalled();
+    expect(result).toEqual(indexBulkResponse);
+  });
+
+  it('should throw an error when indexing data in Elasticsearch fails', async () => {
+    const bulkErrorMock = jest
+      .fn()
+      .mockRejectedValue(new Error('Indexing error'));
+
+    (service as any).client.bulk = bulkErrorMock;
+
+    await expect(service.index(indexDataDtoArrayMock)).rejects.toThrow(
+      'Indexing error',
     );
   });
 });

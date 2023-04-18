@@ -6,15 +6,17 @@ import { SearchEngineClient } from './models/interfaces/search-engine-client.int
 import { PaginationArgs } from '../../../src/models/dtos/pagination.in.dto';
 import {
   AggregationsAggregate,
-  SearchResponse
+  BulkResponse,
+  SearchResponse,
 } from '@elastic/elasticsearch/lib/api/types';
+import { IndexDataDto } from '../../../src/modules/search/models/dtos/index-data.in.dto';
 
 @Injectable()
 export class SearchEngineService {
   private searchEngineClient: SearchEngineClient;
 
   constructor(
-    @Inject(SEARCH_ENGINE_CONFIG) private config: SearchEngineConfig
+    @Inject(SEARCH_ENGINE_CONFIG) private config: SearchEngineConfig,
   ) {
     switch (config.provider) {
       case 'elasticsearch':
@@ -27,13 +29,19 @@ export class SearchEngineService {
 
   async search(
     query: string,
-    pagination: PaginationArgs
+    pagination: PaginationArgs,
   ): Promise<
     SearchResponse<unknown, Record<string, AggregationsAggregate>> | any
   > {
     return this.searchEngineClient.search(query, pagination);
   }
-
+  async index(indexDataDto: IndexDataDto[]): Promise<BulkResponse> {
+    try {
+      return this.searchEngineClient.index(indexDataDto);
+    } catch (err) {
+      throw err;
+    }
+  }
   get provider(): 'elasticsearch' | 'alternative' {
     return this.config.provider || 'elasticsearch';
   }

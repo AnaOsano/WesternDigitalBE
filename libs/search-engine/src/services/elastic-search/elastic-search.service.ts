@@ -1,9 +1,11 @@
-import { Client } from '@elastic/elasticsearch';
+import { Client, TransportResult } from '@elastic/elasticsearch';
 import { SearchEngineClient } from '../../models/interfaces/search-engine-client.interface';
 import {
   AggregationsAggregate,
-  SearchResponse
+  BulkResponse,
+  SearchResponse,
 } from '@elastic/elasticsearch/lib/api/types';
+import { IndexDataDto } from '../../../../../src/modules/search/models/dtos/index-data.in.dto';
 
 export class ElasticSearchService implements SearchEngineClient {
   private readonly client: Client;
@@ -14,7 +16,7 @@ export class ElasticSearchService implements SearchEngineClient {
 
   async search(
     query: string,
-    { skip, limit }
+    { skip, limit },
   ): Promise<SearchResponse<unknown, Record<string, AggregationsAggregate>>> {
     try {
       const results = await this.client.search({
@@ -25,10 +27,10 @@ export class ElasticSearchService implements SearchEngineClient {
           query: {
             multi_match: {
               query: query,
-              fields: ['title', 'content']
-            }
-          }
-        }
+              fields: ['title', 'content'],
+            },
+          },
+        },
       });
 
       return results;
@@ -37,8 +39,29 @@ export class ElasticSearchService implements SearchEngineClient {
     }
   }
 
-  index(document: any, options?: any): Promise<any> {
-    throw new Error(`Method not implemented. ${document} ${options}`);
+  async index(indexDataDto: IndexDataDto[], options?: any): Promise<BulkResponse> {
+    try {
+      const bulkIndexBody: any[] = [];
+
+      indexDataDto.forEach((doc) => {
+        bulkIndexBody.push({
+          index: {
+            _index: process.env.ELASTICSEARCH_INDEX
+          },
+        });
+        bulkIndexBody.push(doc);
+      });
+
+      const response = await this.client.bulk({
+        refresh: 'wait_for',
+        body: bulkIndexBody,
+        ...options,
+      });
+
+      return response;
+    } catch (error) {
+      throw error;
+    }
   }
   update(id: string, document: any, options?: any): Promise<any> {
     throw new Error(`Method not implemented. ${id} ${document} ${options}`);

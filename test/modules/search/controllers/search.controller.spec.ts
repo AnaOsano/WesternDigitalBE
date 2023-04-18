@@ -3,6 +3,10 @@ import { SearchController } from '../../../../src/modules/search/controllers/sea
 import { SearchService } from '../../../../src/modules/search/services/search/search.service';
 import { IPaginatedType } from '../../../../src/models/dtos/pagination.out.dto';
 import { SearchResultDto } from '../../../../src/modules/search/models/dtos/search-result.out.dto';
+import {
+  indexDataDtoArrayMock,
+  indexResultsDtoMock,
+} from '../mocks/search.mocks';
 
 describe('SearchController', () => {
   let controller: SearchController;
@@ -10,7 +14,8 @@ describe('SearchController', () => {
 
   beforeEach(async () => {
     const mockSearchService = {
-      search: jest.fn()
+      search: jest.fn(),
+      indexData: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -18,9 +23,9 @@ describe('SearchController', () => {
       providers: [
         {
           provide: SearchService,
-          useValue: mockSearchService
-        }
-      ]
+          useValue: mockSearchService,
+        },
+      ],
     }).compile();
 
     controller = module.get<SearchController>(SearchController);
@@ -38,12 +43,12 @@ describe('SearchController', () => {
         {
           id: '1',
           title: 'Test title',
-          content: 'Test description'
-        }
+          content: 'Test description',
+        },
       ],
       skip: 0,
       limit: 10,
-      total: 1
+      total: 1,
     };
 
     (service.search as jest.Mock).mockResolvedValue(expectedResult);
@@ -65,6 +70,30 @@ describe('SearchController', () => {
     } catch (e) {
       if (e instanceof Error) {
         expect(e.message).toBe('Search failed');
+      } else {
+        fail('Error not instance of Error');
+      }
+    }
+  });
+
+  it('should index data and return indexed results', async () => {
+    (service.indexData as jest.Mock).mockResolvedValue(indexResultsDtoMock);
+
+    const result = await controller.indexData(indexDataDtoArrayMock);
+
+    expect(result).toEqual(indexResultsDtoMock);
+    expect(service.indexData).toHaveBeenCalledWith(indexDataDtoArrayMock);
+  });
+
+  it('should handle errors when indexing data', async () => {
+    const error = new Error('Indexing failed');
+    (service.indexData as jest.Mock).mockRejectedValue(error);
+
+    try {
+      await controller.indexData(indexDataDtoArrayMock);
+    } catch (e) {
+      if (e instanceof Error) {
+        expect(e.message).toBe('Indexing failed');
       } else {
         fail('Error not instance of Error');
       }
