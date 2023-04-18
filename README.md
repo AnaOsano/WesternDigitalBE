@@ -1,73 +1,189 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# Western Digital Searches
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This project is a search engine for human resources that gathers information from different sources. It provides autocomplete functions and displays search results in a client-side search bar, offering a seamless experience for users seeking human resource information.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Table of Contents
 
-## Description
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+  - [Elasticsearch-backend API](#elasticsearch-backend-api)
+- [Project Structure and Patterns](#project-structure-and-patterns)
+- [Development](#development)
+  - [Running the App](#running-the-app)
+  - [Running Tests](#running-tests)
+- [NodeJS Upgrade and Dependencies Installation](#nodejs-upgrade-and-dependencies-installation)
+- [Dockerization](#dockerization)
+  - [Building the Docker Image](#building-the-docker-image)
+  - [Running the Docker Container](#running-the-docker-container)
+- [Debugging](#debugging)
+- [Contributing](#contributing)
+- [License](#license)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Getting Started
 
-## Installation
+These instructions will help you set up the project on your local machine for development and testing purposes.
 
-```bash
-$ npm install
+### Prerequisites
+
+Before you begin, ensure you have the following installed on your system:
+
+- [Node.js](https://nodejs.org/) (version 14.x or higher)
+- [npm](https://www.npmjs.com/) (usually comes with Node.js)
+
+### Installation
+
+1. Clone the repository:
+
+git clone https://github.com/AnaOsano/WesternDigitalBE.git
+
+
+2. Navigate to the project folder:
+
+cd WesternDigitalBE
+
+
+3. Install the dependencies:
+
+npm install
+
+
+Now, you're ready to start working on the project!
+
+## Elasticsearch-backend API
+
+We have implemented an API that interacts with the Elasticsearch instance to provide search functionality for development and testing purposes. You can use this API to interact with the search engine, test the autocomplete functions, and display the search results on the client-side search bar.
+
+The API is available at `http://localhost/v1/search` and accepts a GET request with any query string. For example, to search for a term, you can use the following request format:
+
+```curl
+GET http://localhost/v1/search?query=your_search_term&skip=0&limit=10
 ```
 
-## Running the app
+Replace `your_search_term` with the term you want to search for, and the API will return paginated search results from Elasticsearch. The `skip` and `limit` parameters can be used to control the pagination of the results. By default, `skip` is set to 0 and the `limit` is set to 10.
 
-```bash
-# development
-$ npm run start
+As a result of the query, you will receive paginated search results. For example, to search for the term "Applying for a position" and retrieve the first five results, you can use the following request:
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```curl
+GET http://localhost/v1/search?query=Applying%20for%20a%20position&skip=0&limit=5
 ```
 
-## Test
+The search results are no longer mocked, and they are retrieved directly from the Elasticsearch instance.
 
-```bash
-# unit tests
-$ npm run test
+## Project Structure and Patterns
 
-# e2e tests
-$ npm run test:e2e
+Our project follows the controller-service-repository pattern, which enables a clean and maintainable architecture. The main components of this pattern are:
 
-# test coverage
-$ npm run test:cov
+- **Controllers**: Handle HTTP requests and delegate business logic to services.
+- **Services**: Contain the core business logic, responsible for interacting with repositories and returning data to controllers.
+- **Repositories**: Provide an abstraction layer over data access and storage, decoupling the application from the underlying data source.
+
+We have organized our codebase into the following directories:
+
+- **modules**: Contains the main application modules, each with its controllers, services, and repositories.
+- **helpers**: Houses utility functions and classes that can be used throughout the application to perform common tasks.
+- **middlewares**: Stores Express middleware functions that are used to process incoming requests before they reach the controllers.
+- **filters**: Contains custom exception filters that can be used to catch and handle specific exceptions in a centralized manner.
+
+Our tests are organized in a separate directory structure that mirrors the main project structure, making it easy to locate and manage tests for each module and component.
+
+## Development
+
+### Running the App
+
+To run the app in development mode, use the following command:
+
+npm run start:dev
+
+
+The app will be available at `http://localhost:80`.
+
+### Running Tests
+
+To run tests, use the following command:
+
+npm test
+
+## NodeJS Upgrade and Dependencies Installation
+
+To upgrade or install dependencies, follow these steps:
+
+1. Ensure you have the latest version of Node.js installed on your system. You can download it from the [official Node.js website](https://nodejs.org/).
+
+2. Navigate to your project directory and run the following command to install or upgrade the project dependencies:
+
+```console 
+npm install
 ```
 
-## Support
+This command will install or update the dependencies listed in your package.json file. If you need to add a new dependency or upgrade an existing one to a specific version, you can use the following command:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```console
+npm install package-name@version
+```
 
-## Stay in touch
+Replace the `package-name` with the name of the package you want to install or upgrade and the `version` with the desired version number.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Dockerization
 
-## License
+This project uses Docker to simplify the setup and deployment process. The Docker configuration includes the following services:
 
-Nest is [MIT licensed](LICENSE).
+1. Elasticsearch
+2. Kibana
+3. Our NestJS backend application (WDBES)
+
+The project also includes a script, `scripts/docker/elastic_init.sh`, and a sample data file, `src/data/hr_data.elasticsearch.json`, for preloading data into Elasticsearch. To import the sample data, set the environment variable `ELASTICSEARCH_IMPORT_HR_SAMPLE_DATA` to `true` in the `.env` file.
+
+### Prerequisites
+
+To run the project using Docker, you'll need to have the following installed on your system:
+
+- Docker Engine
+- Docker Compose
+
+### Elasticsearch
+
+Elasticsearch is a powerful open-source search and analytics engine. In this project, it is configured as a single-node cluster, and the security features are disabled.
+
+To access Elasticsearch, use the following address:
+
+- http://localhost:9200
+
+### Kibana
+
+Kibana is an open-source data visualization and exploration tool for Elasticsearch. It provides a web-based interface to interact with the data stored in Elasticsearch.
+
+To access Kibana, use the following address:
+
+- http://localhost:5601
+
+### WDBES
+
+WDBES is the custom service developed for this project. It depends on the Elasticsearch service.
+
+### Running the Services
+
+To run the services, navigate to the project directory and use the following command:
+
+```bash
+docker-compose up --build -d
+```
+
+This command will start all the services in the background. To stop the services, use the following command:
+
+```bash
+docker-compose down
+```
+
+By running the `docker-compose up --build -d` command, the containers will be initialized, and if the `ELASTICSEARCH_IMPORT_HR_SAMPLE_DATA` flag is set to `true`, the sample data from `src/data/hr_data.elasticsearch.json` will be imported into Elasticsearch.
+
+## Debugging
+
+The project includes a `.vscode/launch.json` configuration file, which allows you to debug the application using Visual Studio Code. To start debugging, follow these steps:
+
+1. Open the project in Visual Studio Code.
+2. Make sure you have the necessary dependencies installed by running `npm install`.
+3. Press `F5` or go to the "Run" tab in the sidebar and click the "Start Debugging" button with the `Debug app(Local)` option in the dropdown menu.
+
+The application will start in debug mode, and you can set breakpoints, inspect variables, and use other debugging features provided by Visual Studio Code. For more information on debugging in Visual Studio Code, refer to the [official documentation](https://code.visualstudio.com/docs/editor/debugging).
