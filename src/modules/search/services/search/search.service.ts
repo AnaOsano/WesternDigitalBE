@@ -3,7 +3,12 @@ import { SearchEngineService } from '../../../../../libs/search-engine/src/searc
 import { PaginationArgs } from '../../../../models/dtos/pagination.in.dto';
 import { IPaginatedType } from '../../../../models/dtos/pagination.out.dto';
 import { SearchResultDto } from '../../models/dtos/search-result.out.dto';
-import { PaginatedSearchResultsMapper } from '../../models/mappers/search-result.mapper';
+import {
+  PaginatedSearchResultsMapper,
+  IndexResultsMapper,
+} from '../../models/mappers/search-result.mapper';
+import { IndexDataDto } from '../../models/dtos/index-data.in.dto';
+import { IndexResultsDto } from '../../models/dtos/index-data.out.dto';
 
 @Injectable()
 export class SearchService {
@@ -22,6 +27,14 @@ export class SearchService {
         pagination,
         this.searchEngineService.provider,
       );
+    } catch (err) {
+      throw err;
+    }
+  }
+  async indexData(indexDataDto: IndexDataDto[]): Promise<IndexResultsDto> {
+    try {
+      const results = await this.searchEngineService.index(indexDataDto);
+      return IndexResultsMapper(results, this.searchEngineService.provider);
     } catch (err) {
       throw err;
     }

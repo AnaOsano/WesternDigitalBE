@@ -1,4 +1,3 @@
-// search-result.dto.ts
 import { ObjectType, Field } from '@nestjs/graphql';
 
 @ObjectType()
