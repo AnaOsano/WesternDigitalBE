@@ -8,6 +8,7 @@
         "filters",
         "modules/search",
         "docs",
-        "libs"
+        "libs",
+        "modules/auth"
     ]
 }

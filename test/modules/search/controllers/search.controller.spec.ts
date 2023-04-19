@@ -7,6 +7,8 @@ import {
   indexDataDtoArrayMock,
   indexResultsDtoMock,
 } from '../mocks/search.mocks';
+import { AuthGuard } from '../../../../src/modules/auth/guards/auth.guard';
+import { JwtService } from '@nestjs/jwt';
 
 describe('SearchController', () => {
   let controller: SearchController;
@@ -21,6 +23,8 @@ describe('SearchController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [SearchController],
       providers: [
+        AuthGuard,
+        JwtService,
         {
           provide: SearchService,
           useValue: mockSearchService,
