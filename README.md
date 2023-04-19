@@ -71,8 +71,8 @@ POST /api/v1/auth/login
 Content-Type: application/json
 
 {
-  "username": "exampleuser",
-  "password": "examplepassword"
+  "username": "user@example.com",
+  "password": "password"
 }
 ```
 
