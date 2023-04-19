@@ -50,6 +50,42 @@ Now, you're ready to start working on the project!
 
 ## Elasticsearch-backend API
 
+### Authentication
+
+If you want to run the application locally and not from the Docker Compose image, you need to create JWT keys to use the asymmetric RS512 algorithm in the project root. Follow these steps to generate the keys and please don't use a passphrase for the keys when prompted:
+
+```bash
+$ mkdir -p src/data/jwt
+$ ssh-keygen -t rsa -b 4096 -m PEM -f src/data/jwt/jwt.key # No passphrase is required
+$ openssl rsa -in src/data/jwt/jwt.key -pubout -outform PEM -out src/data/jwt/jwt.key.pub
+```
+
+This project uses an authentication module to secure the search and index APIs using JWT. To obtain an access token, make a POST request to the `/auth/login` endpoint with a `username` and `password` in the request body.
+
+Example:
+
+Request:
+
+```http
+POST /api/v1/auth/login
+Content-Type: application/json
+
+{
+  "username": "exampleuser",
+  "password": "examplepassword"
+}
+```
+
+Response:
+
+```json
+{
+  "access_token": "your_access_token"
+}
+```
+
+Use the received `access_token` as a `Bearer` token in the `Authorization header` for subsequent restricted API requests, such as the search and index APIs.
+
 ### Search API
 
 We have implemented an API that interacts with the Elasticsearch instance to provide search functionality for development and testing purposes. You can use this API to interact with the search engine, test the autocomplete functions, and display the search results on the client-side search bar.
