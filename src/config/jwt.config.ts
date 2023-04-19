@@ -21,13 +21,13 @@ try {
   JWT_PRIVATE_KEY = existsSync(join(process.cwd(), '/jwt-gen.key'))
     ? readFileSync(join(process.cwd(), '/jwt-gen.key'), 'utf8')
     : existsSync(join(process.cwd(), '/data/jwt/jwt.key'))
-    ? readFileSync(join(process.cwd(), '/data/jwt/jwt.key'), 'utf8')
-    : readFileSync(join(process.cwd(), '/src/data/jwt/jwt.key'), 'utf8');
+      ? readFileSync(join(process.cwd(), '/data/jwt/jwt.key'), 'utf8')
+      : readFileSync(join(process.cwd(), '/src/data/jwt/jwt.key'), 'utf8');
   JWT_PUBLIC_KEY = existsSync(join(process.cwd(), '/jwt-gen.key.pub'))
     ? readFileSync(join(process.cwd(), '/jwt-gen.key.pub'), 'utf8')
     : existsSync(join(process.cwd(), '/data/jwt/jwt.key.pub'))
-    ? readFileSync(join(process.cwd(), '/data/jwt/jwt.key.pub'), 'utf8')
-    : readFileSync(join(process.cwd(), '/src/data/jwt/jwt.key.pub'), 'utf8');
+      ? readFileSync(join(process.cwd(), '/data/jwt/jwt.key.pub'), 'utf8')
+      : readFileSync(join(process.cwd(), '/src/data/jwt/jwt.key.pub'), 'utf8');
 } catch (e) {
   if (!JWT_PRIVATE_KEY) {
     JWT_PRIVATE_KEY = 'S3cr3T';
